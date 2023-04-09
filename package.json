@@ -20,6 +20,7 @@
     "vite-plugin-elm": "^2.8.0-beta.3"
   },
   "dependencies": {
+    "elm-css": "github:rtfeldman/elm-css",
     "elm-debug-transformer": "^1.1.2"
   }
 }
