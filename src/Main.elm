@@ -1,27 +1,38 @@
 module Main exposing (main)
 
 import Browser
-import Html.Styled exposing (Html, div, img)
-import Html.Styled.Attributes exposing (src, style)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
+import Html.Styled.Events exposing (..)
 import VitePluginHelper
 
-type Msg = NoOp
+type Msg = UpdateNewTodo String | SubmitTodo
+type alias Model = { newTodo : String, todos: List Todo }
+type alias Todo = { task : String, completed : Bool}
 
 
-main : Program () Int Msg
+main : Program () Model Msg
 main =
-    Browser.sandbox { init = 0, update = update, view = view >> Html.Styled.toUnstyled }
+    Browser.sandbox { init = { newTodo = "I work!", todos = []}, update = update, view = view >> Html.Styled.toUnstyled }
 
 
 
-update : Msg -> number -> number
+update : Msg -> Model -> Model
 update msg model =
     case msg of
-        NoOp -> model
+    UpdateNewTodo todo -> {model | newTodo = todo }
+    SubmitTodo -> {model | todos = model.todos ++ { task = model.newTodo, completed : false, newTodo = "" }}
 
 
-view : Int -> Html Msg
+view : Model -> Html Msg
 view model =
     div []
-        [ img [ src <| VitePluginHelper.asset "/src/assets/logo.png", style "width" "300px" ] []
+        [ 
+            ul [] [
+
+            ]
+            ,Html.Styled.form [] [
+            input [value model.newTodo, onInput UpdateNewTodo] []
+            ,button [type_"submit" ] [text "Submit"]
+            ]
         ]
