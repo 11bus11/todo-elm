@@ -1,6 +1,7 @@
 module Main exposing (main)
 
 import Browser
+import Css
 import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (..)
 import Html.Styled.Events exposing (..)
@@ -28,11 +29,10 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [css [Css.maxWidth (Css.ch 40)]]
         [ 
-            ul [] [
-
-            ]
+            ul [] 
+                (List.map (\todo -> li [] [text todo.task]) model.todos)
             ,Html.Styled.form [ onSubmit SubmitTodo ] [
             input [value model.newTodo, onInput UpdateNewTodo] []
             ,button [type_"submit" ] [text "Submit"]
